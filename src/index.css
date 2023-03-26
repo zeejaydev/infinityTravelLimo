@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  font-family: "Poppins", sans-serif, system-ui, Avenir, Helvetica, Arial;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+a {
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+}
+a:hover {
+  color: white;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+.hero {
+  object-fit: cover;
+  z-index: -1;
+  width: 100vw;
+}
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none !important;
+  background-color: white;
+}
+
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #74787c;
+  background-color: transparent;
+  margin-right: 0.5em;
+}
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: "";
+}
+
+input[type="time"]:before {
+  content: attr(placeholder) !important;
+  color: #74787c;
+  background-color: transparent;
+  margin-right: 0.5em;
+}
+input[type="time"]:focus:before,
+input[type="time"]:valid:before {
+  content: "";
+}
+
+section:nth-child(2n + 5):not(:first-child) {
+  background-color: #f6f6f6;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  color: #74787c;
+  /* line-height: 20px; */
+  background: #fff;
+  background-image: url("/assets/caret-down-light.svg");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+  /* margin: 0 5px 5px 0; */
+}
+
+/* 
+.pac-logo::after {
+  background-image: none;
+} */

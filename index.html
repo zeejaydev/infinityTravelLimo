@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="private car service & limo in salt lake city utah & park city"
+    />
+    <title>Vite + React + TS</title>
+    <link rel="preconnect" href="https://ik.imagekit.io" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://ik.imagekit.io/zeejaydev/bg.jpg"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="https://ik.imagekit.io/zeejaydev/430.jpg"
+    />
+
+    <script>
+      setTimeout(() => {
+        var po = document.createElement("script");
+        po.type = "text/javascript";
+        po.async = true;
+        po.src =
+          "https://maps.googleapis.com/maps/api/js?key=%VITE_PLACES_API_KEY%&libraries=places";
+
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(po, s);
+      }, 4000);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

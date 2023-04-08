@@ -11,7 +11,6 @@ module.exports = {
         "3/4": "70vh",
         "hero-height": "820px",
         "1/3": "30vh",
-        "booking-from": "336px",
       },
       width: {
         "200px": "200px",

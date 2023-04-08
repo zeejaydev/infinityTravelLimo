@@ -3,8 +3,8 @@ import { Input, selectTypes } from "../../Types";
 export const bookingFormMenuTypes: selectTypes[] = [
   selectTypes.fromAirport,
   selectTypes.toAirport,
-  selectTypes.hourly,
   selectTypes.pointToPoint,
+  selectTypes.hourly,
   // selectTypes.roundTrip,
 ];
 
@@ -20,6 +20,11 @@ export const formPayloadMap = {
   ["returnDate"]: "",
   ["roundTrip"]: "none",
   ["hours"]: "3",
+  ["bookingType"]: selectTypes.fromAirport,
+  ["dest"]: "",
+  ["endDest"]: "",
+  ["email"]: "",
+  ["flightNumber"]: "",
 };
 
 const today = new Date();
@@ -43,6 +48,12 @@ export const inputs: Input[] = [
     height: 70,
   },
   {
+    name: "email",
+    placeHolder: "Email",
+    type: "email",
+    height: 70,
+  },
+  {
     name: "nop",
     placeHolder: "Number of Passengers",
     type: "number",
@@ -58,7 +69,7 @@ export const inputs: Input[] = [
   },
   {
     name: "returnDate",
-    placeHolder: "Return Date",
+    placeHolder: "Return",
     type: "date",
     height: 70,
     min: returnDate.toISOString().split("T")[0],
@@ -79,6 +90,12 @@ export const inputs: Input[] = [
   {
     name: "endDest",
     placeHolder: "End Destination",
+    type: "text",
+    height: 70,
+  },
+  {
+    name: "flightNumber",
+    placeHolder: "Flight Info ",
     type: "text",
     height: 70,
   },

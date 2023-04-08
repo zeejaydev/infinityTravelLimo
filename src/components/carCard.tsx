@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CarCardProps } from "../Types";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { images } from "./imagesData";
+import { useClickAway } from "../utls";
 
 const CarCard: FC<CarCardProps> = ({
   imageSrc,
@@ -14,20 +15,7 @@ const CarCard: FC<CarCardProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    if (ref.current != null && !ref.current.contains(e.target))
-      setShowLightbox(false);
-  };
-
-  useEffect(() => {
-    if (showLightbox) {
-      document.addEventListener("mousedown", handleClick);
-      return () => {
-        document.removeEventListener("mousedown", handleClick);
-      };
-    }
-  }, [showLightbox]);
+  useClickAway(ref, () => setShowLightbox(false), showLightbox);
 
   const handleNextImage = () => {
     if (imageToShow + 1 == images.length) return;

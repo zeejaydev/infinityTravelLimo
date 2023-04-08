@@ -1,18 +1,31 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { formPayload, Input, selectTypes } from "../../Types";
+import { FC, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  FormPayload,
+  Input,
+  Locations,
+  selectTypes,
+  StartBookingResults,
+} from "../../Types";
 import { inputs, bookingFormMenuTypes, formPayloadMap } from "./formHelpers";
+import BookingModal from "../../components/bookingModal";
+import { generateHoursInterval, useClickAway } from "../../utls";
 
 const BookingForm: FC = () => {
-  const [selectedType, setSelectedType] = useState<string>(
-    selectTypes.fromAirport
-  );
-  const [payload, setPayload] = useState<formPayload>(formPayloadMap);
+  const [payload, setPayload] = useState<FormPayload>(formPayloadMap);
   const [activateApi, setActivateApi] = useState<boolean>(false);
-  const [mounted, setmounted] = useState<boolean>(false);
-
+  const [showBookingModal, setShowBookingModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [results, setResults] = useState<StartBookingResults | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showHours, setShowHours] = useState<boolean>(false);
+  const [showReturnHours, setShowReturnHours] = useState<boolean>(false);
+  const [hourValue, setHourValue] = useState<string>("");
+  const [returnHourValue, setReturnHourValue] = useState<string>("");
   const startDestRef = useRef<HTMLInputElement>(null);
   const endDestRef = useRef<HTMLInputElement>(null);
   const phoneNumberRef = useRef<HTMLInputElement>(null);
+  const hoursDropDwon = useRef<HTMLDivElement>(null);
+  const returnHoursDropDwon = useRef<HTMLDivElement>(null);
 
   const options = {
     componentRestrictions: { country: "us" },
@@ -75,13 +88,20 @@ const BookingForm: FC = () => {
     }
   }, [activateApi]);
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log(startDestRef.current?.value);
-    console.log(endDestRef.current?.value);
-    console.log(payload);
-  };
+  useEffect(() => {
+    if (showBookingModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [showBookingModal]);
+
+  useClickAway(hoursDropDwon, () => setShowHours(false), showHours);
+  useClickAway(
+    returnHoursDropDwon,
+    () => setShowReturnHours(false),
+    showReturnHours
+  );
 
   const handlePhoneNumberChange = (): void => {
     if (!phoneNumberRef.current) return;
@@ -115,8 +135,70 @@ const BookingForm: FC = () => {
     if (endDestRef.current != null && endDestRef.current.value.length) {
       endDestRef.current.value = "";
     }
-    setPayload({ ...payload, roundTrip: "none" });
-    setSelectedType(event.currentTarget.textContent ?? selectTypes.fromAirport);
+    setPayload({
+      ...payload,
+      roundTrip: "none",
+      dest:
+        event.currentTarget.textContent == selectTypes.fromAirport
+          ? Locations.airport
+          : "",
+      endDest:
+        event.currentTarget.textContent == selectTypes.toAirport
+          ? Locations.airport
+          : "",
+      bookingType: event.currentTarget.textContent ?? selectTypes.fromAirport,
+    });
+  };
+
+  const startBooking = (event: FormEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setLoading(true);
+    setShowBookingModal((prev) => !prev);
+
+    const from: string =
+      payload.dest != ""
+        ? payload.dest
+        : payload.bookingType == selectTypes.fromAirport
+        ? Locations.airport
+        : "";
+
+    const to: string =
+      payload.endDest != ""
+        ? payload.endDest
+        : payload.bookingType == selectTypes.toAirport
+        ? Locations.airport
+        : "";
+
+    setPayload((prev) => ({ ...prev, dest: from, endDest: to }));
+
+    fetch(
+      "https://infinity-travel-limo.zeejaydevbackend.com/api/travel-limo/quote",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...payload,
+          dest: from,
+          endDest: to,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (errorMessage != null) {
+          setErrorMessage(null);
+        }
+        if (res.error) {
+          setErrorMessage(res.error);
+        } else {
+          setResults(res.results);
+        }
+        setLoading(false);
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -124,7 +206,7 @@ const BookingForm: FC = () => {
       id="booking"
       className="flex flex-col gap-5 3x:gap-0 3xl:flex-row m-auto justify-between items-center max-w-screen-2xl min-h-1/2 py-10 md:px-5 px-2"
     >
-      <form onSubmit={submit} className="flex flex-col gap-5 w-full">
+      <form onSubmit={startBooking} className="flex flex-col gap-5 w-full">
         <h1 className="text-5xl font-bold uppercase">Book Your Limo Online</h1>
         <span className="text-sm mt-[-20px] capitalize md:ml-2">
           <span className="text-red-600">*</span> model not guaranteed, Will
@@ -134,7 +216,7 @@ const BookingForm: FC = () => {
           <span className="text-red-600">*</span> booking must be 2 days in
           advanced
         </span>
-        <div className="flex flex-col md:flex-row min-h-booking-from">
+        <div className="flex flex-col md:flex-row min-h-[392px]">
           <ul
             className="bg-bg-dark 
             flex flex-wrap gap-2 px-2 py-5 mb-3 items-center flex-col md:gap-5 text-white font-semibold md:py-10 md:px-5 uppercase md:mr-2 md:mb-0 md:min-w-200px 
@@ -143,7 +225,7 @@ const BookingForm: FC = () => {
             {bookingFormMenuTypes.map((type, index) => (
               <li
                 className={`cursor-pointer ${
-                  selectedType == type ? "text-[#FF2B2B]" : ""
+                  payload.bookingType == type ? "text-[#FF2B2B]" : ""
                 }`}
                 key={index}
                 onClick={handleSelectedType}
@@ -155,7 +237,7 @@ const BookingForm: FC = () => {
 
           <div className="flex flex-col md:flex-row gap-3 w-full">
             <div className="flex flex-col gap-3 justify-between flex-1">
-              {inputs.slice(0, 5).map((input: Input, index) => {
+              {inputs.slice(0, 6).map((input: Input, index) => {
                 if (input.name == "phone") {
                   return (
                     <input
@@ -178,8 +260,8 @@ const BookingForm: FC = () => {
                 } else if (
                   input.name == "returnDate" &&
                   payload.roundTrip == "yes" &&
-                  (selectedType == selectTypes.fromAirport ||
-                    selectedType == selectTypes.toAirport)
+                  (payload.bookingType == selectTypes.fromAirport ||
+                    payload.bookingType == selectTypes.toAirport)
                 ) {
                   return (
                     <input
@@ -188,7 +270,7 @@ const BookingForm: FC = () => {
                       type={input.type}
                       min={input.min}
                       onChange={(e) => handleSetPayload(e, input.name)}
-                      placeholder="Return Date"
+                      placeholder={input.placeHolder}
                       className="border-2 
                       border-input-border 
                       p-5 
@@ -221,23 +303,25 @@ const BookingForm: FC = () => {
             </div>
             <div
               className={`flex flex-col ${
-                selectedType == selectTypes.pointToPoint
-                  ? "justify-start gap-5"
+                payload.bookingType == selectTypes.pointToPoint ||
+                payload.bookingType == selectTypes.hourly
+                  ? "justify-start gap-3"
                   : "justify-between gap-3"
               } flex-1`}
             >
-              {inputs.slice(5).map((input: Input, index) => {
+              {inputs.slice(6).map((input: Input, index) => {
                 if (input.name == "dest") {
                   return (
                     <input
                       ref={startDestRef}
-                      disabled={selectedType == selectTypes.fromAirport}
+                      disabled={payload.bookingType == selectTypes.fromAirport}
                       key={index}
                       required
                       type={input.type}
+                      onChange={(e) => handleSetPayload(e, input.name)}
                       placeholder={
-                        selectedType == selectTypes.fromAirport
-                          ? "SLC International Airport"
+                        payload.bookingType == selectTypes.fromAirport
+                          ? Locations.airport
                           : input.placeHolder
                       }
                       className="border-2 
@@ -248,17 +332,21 @@ const BookingForm: FC = () => {
                         placeholder-input-place-holder"
                     />
                   );
-                } else if (input.name == "endDest") {
+                } else if (
+                  input.name == "endDest" &&
+                  payload.bookingType != selectTypes.hourly
+                ) {
                   return (
                     <input
                       ref={endDestRef}
-                      disabled={selectedType == selectTypes.toAirport}
+                      disabled={payload.bookingType == selectTypes.toAirport}
                       key={index}
+                      onChange={(e) => handleSetPayload(e, input.name)}
                       required
                       type={input.type}
                       placeholder={
-                        selectedType == selectTypes.toAirport
-                          ? "SLC International Airport"
+                        payload.bookingType == selectTypes.toAirport
+                          ? Locations.airport
                           : input.placeHolder
                       }
                       className="border-2
@@ -272,27 +360,67 @@ const BookingForm: FC = () => {
                 } else if (
                   input.name == "returnTime" &&
                   payload.roundTrip == "yes" &&
-                  (selectedType == selectTypes.fromAirport ||
-                    selectedType == selectTypes.toAirport)
+                  (payload.bookingType == selectTypes.fromAirport ||
+                    payload.bookingType == selectTypes.toAirport)
                 ) {
                   return (
-                    <input
-                      key={index}
-                      required
-                      type={input.type}
-                      placeholder={input.placeHolder}
-                      onChange={(e) => handleSetPayload(e, input.name)}
-                      className="border-2 
-                    border-input-border 
-                    p-5 
-                    focus:outline-char-black 
-                    text-char-black 
-                    placeholder-input-place-holder"
-                    />
+                    <div className="relative" key={index}>
+                      <input
+                        readOnly
+                        onClick={() => setShowReturnHours(true)}
+                        placeholder={`Return Time`}
+                        value={
+                          returnHourValue != ""
+                            ? `Return Time ${returnHourValue}`
+                            : ""
+                        }
+                        className="border-2 w-full
+                          border-input-border 
+                          p-5 
+                          focus:outline-char-black 
+                          text-char-black 
+                          placeholder-input-place-holder"
+                      />
+                      {showReturnHours && (
+                        <div
+                          ref={returnHoursDropDwon}
+                          className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] overflow-y-auto drop-shadow-xl"
+                        >
+                          <div className="flex flex-col text-justify">
+                            {generateHoursInterval(60 * 0, 60 * 24, 15).map(
+                              (time, idx) => (
+                                <span
+                                  key={idx}
+                                  onClick={() => (
+                                    setPayload((prev) => ({
+                                      ...prev,
+                                      [input.name]: (time.split(" ")[1] == "PM"
+                                        ? parseInt(
+                                            time.split(" ")[0].split(":")[0]
+                                          ) +
+                                          12 +
+                                          ":" +
+                                          time.split(" ")[0].split(":")[1]
+                                        : time.split(" ")[0]
+                                      ).toString(),
+                                    })),
+                                    setReturnHourValue(time),
+                                    setShowReturnHours(false)
+                                  )}
+                                  className="text-base font-semibold w-full py-2 hover:bg-black/10 cursor-pointer flex"
+                                >
+                                  <span className="w-[80] m-auto">{time}</span>
+                                </span>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   );
                 } else if (
                   input.name == "hours" &&
-                  selectedType == selectTypes.hourly
+                  payload.bookingType == selectTypes.hourly
                 ) {
                   return (
                     <input
@@ -320,8 +448,8 @@ const BookingForm: FC = () => {
                     return;
                   if (
                     input.type == "select" &&
-                    selectedType != selectTypes.hourly &&
-                    selectedType != selectTypes.pointToPoint
+                    payload.bookingType != selectTypes.hourly &&
+                    payload.bookingType != selectTypes.pointToPoint
                   ) {
                     return (
                       <select
@@ -347,6 +475,63 @@ const BookingForm: FC = () => {
                     );
                   }
                   if (input.type == "select") return;
+
+                  if (input.name == "time") {
+                    return (
+                      <div className="relative" key={index}>
+                        <input
+                          readOnly
+                          onClick={() => setShowHours(true)}
+                          placeholder={`Time`}
+                          value={hourValue != "" ? `Time ${hourValue}` : ""}
+                          className="border-2 w-full
+                          border-input-border 
+                          p-5 
+                          focus:outline-char-black 
+                          text-char-black 
+                          placeholder-input-place-holder"
+                        />
+                        {showHours && (
+                          <div
+                            ref={hoursDropDwon}
+                            className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] overflow-y-auto drop-shadow-xl"
+                          >
+                            <div className="flex flex-col text-justify">
+                              {generateHoursInterval(60 * 0, 60 * 24, 15).map(
+                                (time, idx) => (
+                                  <span
+                                    key={idx}
+                                    onClick={() => (
+                                      setPayload((prev) => ({
+                                        ...prev,
+                                        [input.name]: (time.split(" ")[1] ==
+                                        "PM"
+                                          ? parseInt(
+                                              time.split(" ")[0].split(":")[0]
+                                            ) +
+                                            12 +
+                                            ":" +
+                                            time.split(" ")[0].split(":")[1]
+                                          : time.split(" ")[0]
+                                        ).toString(),
+                                      })),
+                                      setHourValue(time),
+                                      setShowHours(false)
+                                    )}
+                                    className="text-base font-semibold w-full py-2 hover:bg-black/10 cursor-pointer flex"
+                                  >
+                                    <span className="w-[80] m-auto">
+                                      {time}
+                                    </span>
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
                   return (
                     <input
                       key={index}
@@ -390,6 +575,17 @@ const BookingForm: FC = () => {
         src="https://ik.imagekit.io/zeejaydev/form-pic.png"
         alt="Tahoe"
       />
+      {showBookingModal && (
+        <BookingModal
+          payload={payload}
+          setResults={setResults}
+          setErrorMessage={setErrorMessage}
+          loading={loading}
+          results={results}
+          setShowBookingModal={setShowBookingModal}
+          errorMessage={errorMessage}
+        />
+      )}
     </section>
   );
 };

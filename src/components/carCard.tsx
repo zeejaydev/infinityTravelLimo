@@ -39,7 +39,7 @@ const CarCard: FC<CarCardProps> = ({
           />
         </div>
         <div
-          className="flex justify-center flex-wrap items-center absolute h-[100px] w-[100px] bg-red-600 top-[200px] z-20 border-[7px]"
+          className="flex justify-center flex-wrap items-center absolute h-[100px] w-[100px] bg-[#f36e21] top-[200px] z-20 border-[7px]"
           style={{ borderColor: "#F6F6F6", borderRadius: "50%" }}
         >
           <div className="flex flex-col items-center ">
@@ -61,7 +61,7 @@ const CarCard: FC<CarCardProps> = ({
             </div>
             <button
               onClick={() => setShowLightbox(true)}
-              className="bg-red-600 py-3 px-6 text-white uppercase text-sm font-semibold"
+              className="bg-[#f36e21] py-3 px-6 text-white uppercase text-sm font-semibold"
             >
               view images
             </button>

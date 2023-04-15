@@ -16,7 +16,7 @@ const ServiceCard: FC<serciveCardProps> = ({
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="py-5">
-          <span className="flex justify-center w-20 h-20 bg-red-600">
+          <span className="flex justify-center w-20 h-20 bg-[#f36e21]">
             {<Icon width={45} color="white" />}
           </span>
         </div>

@@ -3,17 +3,20 @@ import {
   FormPayload,
   Input,
   Locations,
+  ModalType,
   selectTypes,
   StartBookingResults,
 } from "../../Types";
 import { inputs, bookingFormMenuTypes, formPayloadMap } from "./formHelpers";
 import BookingModal from "../../components/bookingModal";
 import { generateHoursInterval, useClickAway } from "../../utls";
+import Modal from "../../components/modal";
 
 const BookingForm: FC = () => {
   const [payload, setPayload] = useState<FormPayload>(formPayloadMap);
   const [activateApi, setActivateApi] = useState<boolean>(false);
   const [showBookingModal, setShowBookingModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [results, setResults] = useState<StartBookingResults | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,15 +32,10 @@ const BookingForm: FC = () => {
 
   const options = {
     componentRestrictions: { country: "us" },
-    fields: ["formatted_address", "geometry"],
+    fields: ["formatted_address"],
     strictBounds: false,
     // types: ["address", "airport"],
   };
-
-  // const onChangeAddress = (autocomplete: any) => {
-  //   // const location = autocomplete.getPlace();
-  //   console.log("got loc");
-  // };
 
   const startDestAutoCompelete = () => {
     //@ts-ignore
@@ -47,11 +45,15 @@ const BookingForm: FC = () => {
       startDestRef.current,
       options
     );
-    // console.log("autoCompelteStartDest");
-    startDestAutocomplete.addListener(
-      "place_changed",
-      () => null
-      // onChangeAddress(startDestAutocomplete)
+
+    startDestAutocomplete.addListener("place_changed", () =>
+      setPayload((prev) => ({
+        ...prev,
+        dest:
+          startDestRef.current!.value != prev.dest
+            ? startDestRef.current!.value
+            : prev.dest,
+      }))
     );
   };
 
@@ -63,11 +65,15 @@ const BookingForm: FC = () => {
       endDestRef.current,
       options
     );
-    // console.log("autoCompleteEndDest");
-    endDestAutocomplete.addListener(
-      "place_changed",
-      () => null
-      // onChangeAddress(endDestAutocomplete)
+
+    endDestAutocomplete.addListener("place_changed", () =>
+      setPayload((prev) => ({
+        ...prev,
+        endDest:
+          endDestRef.current!.value != prev.endDest
+            ? endDestRef.current!.value
+            : prev.endDest,
+      }))
     );
   };
 
@@ -125,7 +131,17 @@ const BookingForm: FC = () => {
     inputName: string
   ): void => {
     const value: string = event.target.value;
-    setPayload({ ...payload, [inputName]: value });
+
+    if (inputName === "roundTrip" && value === "no") {
+      setPayload({
+        ...payload,
+        returnDate: "",
+        returnTime: "",
+        [inputName]: value,
+      });
+    } else {
+      setPayload({ ...payload, [inputName]: value });
+    }
   };
 
   const handleSelectedType = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -135,9 +151,10 @@ const BookingForm: FC = () => {
     if (endDestRef.current != null && endDestRef.current.value.length) {
       endDestRef.current.value = "";
     }
+    setReturnHourValue("");
     setPayload({
       ...payload,
-      roundTrip: "none",
+      roundTrip: "",
       dest:
         event.currentTarget.textContent == selectTypes.fromAirport
           ? Locations.airport
@@ -204,18 +221,38 @@ const BookingForm: FC = () => {
   return (
     <section
       id="booking"
-      className="flex flex-col gap-5 3x:gap-0 3xl:flex-row m-auto justify-between items-center max-w-screen-2xl min-h-1/2 py-10 md:px-5 px-2"
+      className="flex flex-col gap-5 3xl:gap-0 m-auto justify-between items-center max-w-screen-xl min-h-1/2 py-10 md:px-5 px-2"
     >
-      <form onSubmit={startBooking} className="flex flex-col gap-5 w-full">
+      <form
+        onSubmit={startBooking}
+        className="flex flex-col gap-5 w-full pb-10"
+      >
         <h1 className="text-5xl font-bold uppercase">Book Your Limo Online</h1>
         <span className="text-sm mt-[-20px] capitalize md:ml-2">
-          <span className="text-red-600">*</span> model not guaranteed, Will
+          <span className="text-[#f36e21]">*</span> model not guaranteed, Will
           receive a Tahoe, Yukon, or Expedition.
         </span>
         <span className="text-sm mt-[-20px] capitalize md:ml-2">
-          <span className="text-red-600">*</span> booking must be 2 days in
-          advanced
+          <span className="text-[#f36e21]">*</span>
+          <span> booking must be 2 days in advanced.</span>
         </span>
+        <span className="text-sm mt-[-20px] capitalize md:ml-2">
+          <span className="text-[#f36e21]">*</span> If your start or end
+          destination aren't Salt Lake City Int Aiport please choose
+          Ponit-To-Point
+        </span>
+        <div className="bg-[#f36e21] w-full p-3 flex gap-4 text-white justify-center items-center text-sm md:text-base">
+          <h2 className="md:text-xl uppercase font-semibold">
+            Limited Time 20% OFF your total
+          </h2>
+          <button
+            className="py-1 px-3 md:py-2 md:px-5 font-semibold bg-white text-black drop-shadow-xl"
+            type="button"
+            onClick={() => setShowModal((prev) => !prev)}
+          >
+            GET IT NOW
+          </button>
+        </div>
         <div className="flex flex-col md:flex-row min-h-[392px]">
           <ul
             className="bg-bg-dark 
@@ -225,7 +262,7 @@ const BookingForm: FC = () => {
             {bookingFormMenuTypes.map((type, index) => (
               <li
                 className={`cursor-pointer ${
-                  payload.bookingType == type ? "text-[#FF2B2B]" : ""
+                  payload.bookingType == type ? "text-[#f36e21]" : ""
                 }`}
                 key={index}
                 onClick={handleSelectedType}
@@ -250,10 +287,10 @@ const BookingForm: FC = () => {
                       type={input.type}
                       placeholder={input.placeHolder}
                       className="border-2
-                          border-input-border 
-                          p-5 
-                          focus:outline-char-black 
-                          text-char-black 
+                          border-input-border
+                          p-5
+                          focus:outline-char-black
+                          text-char-black
                           placeholder-input-place-holder"
                     />
                   );
@@ -261,7 +298,8 @@ const BookingForm: FC = () => {
                   input.name == "returnDate" &&
                   payload.roundTrip == "yes" &&
                   (payload.bookingType == selectTypes.fromAirport ||
-                    payload.bookingType == selectTypes.toAirport)
+                    payload.bookingType == selectTypes.toAirport ||
+                    payload.bookingType == selectTypes.pointToPoint)
                 ) {
                   return (
                     <input
@@ -361,7 +399,8 @@ const BookingForm: FC = () => {
                   input.name == "returnTime" &&
                   payload.roundTrip == "yes" &&
                   (payload.bookingType == selectTypes.fromAirport ||
-                    payload.bookingType == selectTypes.toAirport)
+                    payload.bookingType == selectTypes.toAirport ||
+                    payload.bookingType == selectTypes.pointToPoint)
                 ) {
                   return (
                     <div className="relative" key={index}>
@@ -401,6 +440,9 @@ const BookingForm: FC = () => {
                                           12 +
                                           ":" +
                                           time.split(" ")[0].split(":")[1]
+                                        : time.split(" ")[0].split(":")[0] ===
+                                          "12"
+                                        ? time.split(" ")[0].replace("12", "00")
                                         : time.split(" ")[0]
                                       ).toString(),
                                     })),
@@ -448,8 +490,7 @@ const BookingForm: FC = () => {
                     return;
                   if (
                     input.type == "select" &&
-                    payload.bookingType != selectTypes.hourly &&
-                    payload.bookingType != selectTypes.pointToPoint
+                    payload.bookingType != selectTypes.hourly
                   ) {
                     return (
                       <select
@@ -466,7 +507,7 @@ const BookingForm: FC = () => {
                         text-char-black 
                         placeholder-input-place-holder"
                       >
-                        <option value="none" disabled hidden>
+                        <option value="" hidden>
                           Round Trip ?
                         </option>
                         <option value="yes">Yes</option>
@@ -512,6 +553,11 @@ const BookingForm: FC = () => {
                                             12 +
                                             ":" +
                                             time.split(" ")[0].split(":")[1]
+                                          : time.split(" ")[0].split(":")[0] ===
+                                            "12"
+                                          ? time
+                                              .split(" ")[0]
+                                              .replace("12", "00")
                                           : time.split(" ")[0]
                                         ).toString(),
                                       })),
@@ -535,7 +581,7 @@ const BookingForm: FC = () => {
                   return (
                     <input
                       key={index}
-                      required
+                      // required
                       type={input.type}
                       placeholder={input.placeHolder}
                       onChange={(e) => handleSetPayload(e, input.name)}
@@ -565,16 +611,16 @@ const BookingForm: FC = () => {
         />
         <button
           type="submit"
-          className="bg-red-600 py-5 px-10 text-white font-semibold"
+          className="bg-[#f36e21] py-5 px-10 text-white font-semibold"
         >
           Start Booking
         </button>
       </form>
-      <img
+      {/* <img
         className=""
         src="https://ik.imagekit.io/zeejaydev/form-pic.png"
         alt="Tahoe"
-      />
+      /> */}
       {showBookingModal && (
         <BookingModal
           payload={payload}
@@ -584,6 +630,15 @@ const BookingForm: FC = () => {
           results={results}
           setShowBookingModal={setShowBookingModal}
           errorMessage={errorMessage}
+        />
+      )}
+      {showModal && (
+        <Modal
+          setCloseModal={setShowModal}
+          title="subscribe"
+          description="by subscribing to our email list you get a 20% off your booking total price"
+          modalType={ModalType.emailCaptuer}
+          isModalOpen={showModal}
         />
       )}
     </section>

@@ -1,25 +1,43 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 const Footer: FC = () => {
+  const [emailAddress, setEmailAddress] = useState<string>("");
+
+  const subscribe = () => {
+    if (emailAddress != "") {
+      fetch(
+        "https://infinity-travel-limo.zeejaydevbackend.com/api/travel-limo/emailSub",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: emailAddress,
+          }),
+        }
+      );
+    }
+  };
   return (
     <div className="bg-[#161921]">
-      <div className="max-w-screen-lg flex flex-col md:flex-row md:m-auto flex-wrap p-5 justify-between">
-        <div className="flex flex-col h-full mb-10 md:mb-0">
+      <div className="max-w-screen-xl flex flex-col md:flex-row md:m-auto flex-wrap p-5 justify-between">
+        <div className="flex flex-col h-full mb-10 md:mb-0 flex-1 px-5">
           <h1 className="text-base text-white font-semibold uppercase">
             operating hours
           </h1>
           <div className="flex flex-col text-[#ADADAD] font-semibold pt-1 pb-2 ">
-            <span>Sunday: 7am - 12am</span>
-            <span>Monday: 7am - 12am</span>
-            <span>Tuesday: 7am - 12am</span>
-            <span>Wednesday: 7am - 12am</span>
-            <span>Thursday: 7am - 12am</span>
-            <span>Friday: 7am - 12am</span>
-            <span>Saturday: 7am - 12am</span>
+            <span>Sunday: 6am - 11pm</span>
+            <span>Monday: 6am - 11pm</span>
+            <span>Tuesday: 6am - 11pm</span>
+            <span>Wednesday: 6am - 11pm</span>
+            <span>Thursday: 6am - 11pm</span>
+            <span>Friday: 6am - 11pm</span>
+            <span>Saturday: 6am - 11pm</span>
           </div>
           <a
             href="#booking"
-            className="bg-red-600 px-4 py-2 font-semibold h-[40px] text-center uppercase"
+            className="bg-[#f36e21] px-4 py-2 font-semibold h-[40px] text-center uppercase"
             rel="noopener noreferrer"
           >
             book now
@@ -43,22 +61,32 @@ const Footer: FC = () => {
             </div>
           </h1>
         </div> */}
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-1 px-5">
           <h1 className="text-base text-white font-semibold uppercase">
+            Emergency Dispatch 24/7
+          </h1>
+          <p className="text-[#ADADAD] font-semibold pt-1 pb-2">
+            Need Help with a quick booking
+          </p>
+        </div>
+        <div className="flex flex-col flex-1 px-5">
+          <h1 className="text-base text-white font-semibold uppercase ">
             get coupons
           </h1>
-          <span className="text-[#ADADAD] capitalize">
+          <span className="text-[#ADADAD] capitalize font-semibold pt-1 pb-2">
             sign up today and get $50 off your new booking
           </span>
           <div className="flex py-4">
             <input
+              onChange={(e) => setEmailAddress(e.currentTarget.value)}
               type="email"
               className="w-full px-4 outline-none"
               placeholder="Email Address"
             />
             <button
+              onClick={subscribe}
               aria-label="email us button"
-              className="w-[55px] h-[55px] flex justify-center items-center bg-red-600"
+              className="w-[55px] h-[55px] flex justify-center items-center bg-[#f36e21]"
             >
               <EnvelopeIcon width={16} height={16} color="white" />
             </button>

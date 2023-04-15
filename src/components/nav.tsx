@@ -9,10 +9,10 @@ const Nav: FC = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   return (
     <div
-      className="flex flex-col bg-transparent absolute top-1 h-36 justify-between z-10"
+      className="flex flex-col bg-transparent absolute top-1 h-[125px] z-10"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-row justify-between pt-3">
+      <div className="flex flex-row justify-between">
         <h1 className="text-white hidden md:flex md:text-base  capitalize md:pl-6">
           Welcome to infinity travel limo
         </h1>
@@ -32,24 +32,24 @@ const Nav: FC = () => {
           <span className="pl-2 text-sm hidden lg:block">social media</span>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-0">
         <div
-          className="relative flex justify-center w-[150px] h-[75px] md:w-[240px] lg:w-80 items-center text-white md:h-24 
-        backdrop-blur-lg bg-black/20 border-r-4 border-red-500 
+          className="relative flex justify-center w-[150px] h-[75px] md:w-[240px] lg:w-80 items-center text-white md:h-20 
+        backdrop-blur-lg bg-black/20 border-r-4 border-[#f36e21] 
         font-bold text-4xl"
         >
           <img
-            src="/assets/logo.png"
-            className="h-[50%] object-contain md:h-[62px]"
+            src="/assets/logo2.png"
+            className="h-[50%] object-contain md:h-[52px]"
             alt=""
           />
         </div>
 
-        <ul className="hidden text-white md:flex h-24 backdrop-blur-lg bg-black/20 w-1/2 items-center justify-around uppercase">
+        <ul className="hidden text-white md:flex h-20 backdrop-blur-lg bg-black/20 w-1/2 items-center justify-around uppercase">
           <li>
             <a
               href="#"
-              className="hover:border-b-2 border-red-500 ease-in-out duration-75"
+              className="hover:border-b-2 border-[#f36e21] ease-in-out duration-75"
             >
               Home
             </a>
@@ -57,7 +57,7 @@ const Nav: FC = () => {
           <li>
             <a
               href="#services"
-              className="hover:border-b-2 border-red-500 ease-in-out duration-75"
+              className="hover:border-b-2 border-[#f36e21] ease-in-out duration-75"
             >
               Services
             </a>
@@ -65,7 +65,7 @@ const Nav: FC = () => {
           <li>
             <a
               href="#about"
-              className="hover:border-b-2 border-red-500 ease-in-out duration-75"
+              className="hover:border-b-2 border-[#f36e21] ease-in-out duration-75"
             >
               About Us
             </a>
@@ -73,7 +73,7 @@ const Nav: FC = () => {
           <li>
             <a
               href="#contact"
-              className="hover:border-b-2 border-red-500 ease-in-out duration-75"
+              className="hover:border-b-2 border-[#f36e21] ease-in-out duration-75"
             >
               Contact
             </a>

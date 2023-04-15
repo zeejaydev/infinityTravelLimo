@@ -10,7 +10,7 @@ const Services: FC = () => {
     >
       <div className="flex flex-col gap-5 3x:gap-0 m-auto justify-between items-center max-w-screen-xl md:px-5 px-2">
         <div className="flex flex-col gap-5">
-          <span className="text-sm text-[#DB2525] uppercase font-semibold">
+          <span className="text-sm text-[#f36e21] uppercase font-semibold">
             our awesome service fields
           </span>
           <h1 className="text-lg md:text-6xl font-bold capitalize max-w-6xl">

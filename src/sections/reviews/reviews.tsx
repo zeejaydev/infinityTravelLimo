@@ -6,7 +6,7 @@ const Reviews: FC = () => {
     <section>
       <div className="flex min-h-[70vh] md:min-h-[60vh] flex-col gap-5 3x:gap-0 m-auto justify-center items-center max-w-screen-xl py-10 md:px-5 px-2">
         <div className="text-center flex flex-col pb-10">
-          <span className="text-[#DB2525] uppercase font-semibold">
+          <span className="text-[#f36e21] uppercase font-semibold">
             clients testimonial
           </span>
           <h1 className="text-5xl font-bold capitalize mt-3">
@@ -17,7 +17,7 @@ const Reviews: FC = () => {
         <div className="flex w-full justify-center xl:justify-between gap-6 flex-wrap">
           <div className="relative ">
             <img src="https://ik.imagekit.io/zeejaydev/1.png" alt="" />
-            <span className="hidden bg-red-600 w-[90px] h-[90px] absolute md:flex justify-center top-[20px] right-[-40px]">
+            <span className="hidden bg-[#f36e21] w-[90px] h-[90px] absolute md:flex justify-center top-[20px] right-[-40px]">
               <img alt="quotes-mark" src={Quotes} width={45} />
             </span>
           </div>
@@ -36,11 +36,11 @@ const Reviews: FC = () => {
                 david smith
               </h1>
               <div className="flex gap-3">
-                <StarIcon width={20} color="#E30D16" />
-                <StarIcon width={20} color="#E30D16" />
-                <StarIcon width={20} color="#E30D16" />
-                <StarIcon width={20} color="#E30D16" />
-                <StarIcon width={20} color="#E30D16" />
+                <StarIcon width={20} color="#f36e21" />
+                <StarIcon width={20} color="#f36e21" />
+                <StarIcon width={20} color="#f36e21" />
+                <StarIcon width={20} color="#f36e21" />
+                <StarIcon width={20} color="#f36e21" />
               </div>
             </div>
           </div>

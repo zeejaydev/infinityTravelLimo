@@ -9,7 +9,7 @@ const AboutUs: FC = () => {
       <img src="https://ik.imagekit.io/zeejaydev/aboutus.png" alt="about us" />
 
       <div className="flex flex-col gap-3 justify-between">
-        <span className="text-sm uppercase text-red-600 font-semibold">
+        <span className="text-sm uppercase text-[#f36e21] font-semibold">
           A little about us
         </span>
         <h1 className="text-5xl font-bold capitalize">

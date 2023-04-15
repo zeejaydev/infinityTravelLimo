@@ -7,7 +7,7 @@ const OurFleet: FC = () => {
   return (
     <section id="fleet" className="felx flex-col py-10">
       <div className="flex flex-col gap-5 3x:gap-0 m-auto justify-between items-center max-w-screen-xl md:px-5 px-2">
-        <span className="text-sm font-semibold text-red-600 uppercase">
+        <span className="text-sm font-semibold text-[#f36e21] uppercase">
           our growing fleet of suvs
         </span>
         <div className="flex flex-wrap gap-5 justify-center">

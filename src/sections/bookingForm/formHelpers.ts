@@ -55,7 +55,7 @@ export const inputs: Input[] = [
   },
   {
     name: "nop",
-    placeHolder: "Number of Passengers",
+    placeHolder: "Passengers",
     type: "number",
     height: 70,
     min: "0",

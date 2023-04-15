@@ -317,7 +317,7 @@ const BookingModal: FC<BookingModalProps> = ({
                 <p className="font-semibold text-center mb-2 text-red-500">
                   Too many Passengers for one vehicle we quoted you for{" "}
                   {results.cars} cars, for any special accommodations please
-                  give us a call at (801) 812-1234
+                  give us a call at (385) 529-1194
                 </p>
               )}
               <table className="table-auto">

@@ -58,6 +58,7 @@ const CarCard: FC<CarCardProps> = ({
               <h2 className=" text-white text-base uppercase pt-2">
                 {smallDes}
               </h2>
+              <span className="text-white">3 Hour Min</span>
             </div>
             <button
               onClick={() => setShowLightbox(true)}

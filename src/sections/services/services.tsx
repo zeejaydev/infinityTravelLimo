@@ -14,7 +14,7 @@ const Services: FC = () => {
             our awesome service fields
           </span>
           <h1 className="text-lg md:text-6xl font-bold capitalize max-w-6xl">
-            we make sure your every trip Comfortable
+            we make sure your trip Always Comfortable
           </h1>
         </div>
         <div className="relative flex flex-wrap justify-center xl:justify-between gap-5 drop-shadow-lg">

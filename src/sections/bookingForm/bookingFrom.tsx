@@ -228,18 +228,18 @@ const BookingForm: FC = () => {
         className="flex flex-col gap-5 w-full pb-10"
       >
         <h1 className="text-5xl font-bold uppercase">Book Your Limo Online</h1>
-        <span className="text-sm mt-[-20px] capitalize md:ml-2">
-          <span className="text-[#f36e21]">*</span> model not guaranteed, Will
-          receive a Tahoe, Yukon, or Expedition.
+        <span className="text-sm mt-[-20px]  md:ml-2">
+          <span className="text-[#f36e21]">*</span> Model not guaranteed, you
+          will receive a Tahoe, Yukon, or Expedition.
         </span>
-        <span className="text-sm mt-[-20px] capitalize md:ml-2">
+        <span className="text-sm mt-[-20px]  md:ml-2">
           <span className="text-[#f36e21]">*</span>
-          <span> booking must be 2 days in advanced.</span>
+          <span> Booking must be 2 days in advance.</span>
         </span>
-        <span className="text-sm mt-[-20px] capitalize md:ml-2">
+        <span className="text-sm mt-[-20px] md:ml-2">
           <span className="text-[#f36e21]">*</span> If your start or end
-          destination aren't Salt Lake City Int Aiport please choose
-          Ponit-To-Point
+          destination isn't Salt Lake City Int Aiport please choose
+          Point-To-Point.
         </span>
         <div className="bg-[#f36e21] w-full p-3 flex gap-4 text-white justify-center items-center text-sm md:text-base">
           <h2 className="md:text-xl uppercase font-semibold">
@@ -492,6 +492,7 @@ const BookingForm: FC = () => {
                     input.type == "select" &&
                     payload.bookingType != selectTypes.hourly
                   ) {
+                    console.log(payload.roundTrip);
                     return (
                       <select
                         key={index}
@@ -500,15 +501,19 @@ const BookingForm: FC = () => {
                         name={input.name}
                         value={payload.roundTrip}
                         onChange={(e) => handleSetPayload(e, input.name)}
-                        className="border-2 
+                        className={`border-2 
                         h-[70px]
                         p-5 
                         focus:outline-char-black 
-                        text-char-black 
-                        placeholder-input-place-holder"
+                        ${
+                          payload.roundTrip === ""
+                            ? "-input-place-holder"
+                            : "text-char-black "
+                        } 
+                        placeholder-input-place-holder`}
                       >
                         <option value="" hidden>
-                          Round Trip ?
+                          Round Trip
                         </option>
                         <option value="yes">Yes</option>
                         <option value="no">No</option>

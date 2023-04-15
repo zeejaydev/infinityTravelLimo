@@ -25,7 +25,9 @@ function App() {
         id="footer"
         className="bg-[#1B1F29] h-[60px] flex justify-center items-center"
       >
-        <h1 className="text-sm text-white font-semibold">© ZEEJAYDEV 2023</h1>
+        <h1 className="text-sm text-white font-semibold">
+          © ZEEJAYDEV {new Date().getFullYear()}
+        </h1>
       </div>
     </>
   );

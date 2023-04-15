@@ -17,7 +17,7 @@ const Hero: React.FunctionComponent = () => {
         <div className="flex flex-col max-w-2xl items-center justify-center md:justify-start h-full mt-56 text-center md:text-left md:items-start">
           <h1 className="text-base pb-1">24/7 online limo booking service</h1>
           <h1 className="text-3xl md:text-4xl capitalize font-extrabold pb-2 md:pb-6">
-            enjoy comfortable trip with us
+            Professional Limo Service in Utah
           </h1>
           {/* <p className="pb-2  md:pb-6 text-sm md:text-base">
             Dramatically scale backward compatible portals after market

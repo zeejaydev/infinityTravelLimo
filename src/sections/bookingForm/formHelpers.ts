@@ -18,7 +18,7 @@ export const formPayloadMap = {
   ["comments"]: "",
   ["returnTime"]: "",
   ["returnDate"]: "",
-  ["roundTrip"]: "none",
+  ["roundTrip"]: "",
   ["hours"]: "3",
   ["bookingType"]: selectTypes.fromAirport,
   ["dest"]: "",

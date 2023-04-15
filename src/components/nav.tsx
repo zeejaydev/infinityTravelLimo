@@ -19,14 +19,18 @@ const Nav: FC = () => {
         <div className="flex w-full px-5 md:px-0  justify-between text-white md:w-1/2">
           <span className="flex items-center">
             <PhoneIcon className="h-4 w-4 text-white" />
-            <a href="tel:8011233214" className="pl-2 text-sm">
-              (801) 123 1234
+            <a href="tel:3855291194" className="pl-2 text-sm">
+              (385) 529-1194
             </a>
           </span>
           <span className="flex items-center">
             <EnvelopeIcon className="h-4 w-4 text-white" />
-            <a href="mailto:info@infinitytravel.com" className="pl-2 text-sm">
-              info@infinitytravel.com
+            <a
+              href="mailto:info@infinitytravellimo.com"
+              target="_blank"
+              className="pl-2 text-sm"
+            >
+              info@infinitytravellimo.com
             </a>
           </span>
           <span className="pl-2 text-sm hidden lg:block">social media</span>

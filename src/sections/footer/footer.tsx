@@ -76,8 +76,15 @@ const Footer: FC = () => {
           <p className="text-[#ADADAD] font-semibold pt-1 pb-2">
             Last minute and short notice booking
             <br />
-            Please call (801) 555-5555
+            Please give us a call
           </p>
+          <a
+            href="tel:3855291194"
+            className="bg-[#f36e21] px-4 py-2 font-semibold h-[40px] text-center uppercase"
+            rel="noopener noreferrer"
+          >
+            Call
+          </a>
         </div>
         <div className="flex flex-col flex-1 px-5">
           <h1 className="text-base text-white font-semibold uppercase ">
@@ -86,7 +93,7 @@ const Footer: FC = () => {
           <span className="text-[#ADADAD] capitalize font-semibold pt-1 pb-2">
             sign up today and get 20% off your new booking
           </span>
-          <div className="flex py-4">
+          <div className="flex">
             <input
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.currentTarget.value)}

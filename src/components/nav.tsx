@@ -33,7 +33,19 @@ const Nav: FC = () => {
               info@infinitytravellimo.com
             </a>
           </span>
-          <span className="pl-2 text-sm hidden lg:block">social media</span>
+          <a
+            href="https://www.instagram.com/infinitytravellimo/"
+            target="_blank"
+            className=" flex gap-1 items-center pr-2 py-1"
+          >
+            <img
+              src="/assets/Instagram.png"
+              alt=""
+              width={20}
+              className="max-h-[20px]"
+            />
+            <span className="text-sm hidden lg:block">Follow us</span>
+          </a>
         </div>
       </div>
       <div className="flex justify-between mt-0">

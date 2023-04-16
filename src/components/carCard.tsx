@@ -39,8 +39,8 @@ const CarCard: FC<CarCardProps> = ({
           />
         </div>
         <div
-          className="flex justify-center flex-wrap items-center absolute h-[100px] w-[100px] bg-[#f36e21] top-[200px] z-20 border-[7px]"
-          style={{ borderColor: "#F6F6F6", borderRadius: "50%" }}
+          className="flex justify-center flex-wrap items-center absolute h-[100px] w-[100px] bg-[#f36e21] top-[200px] border-[7px]"
+          style={{ borderColor: "#F6F6F6", borderRadius: "50%", zIndex: 5 }}
         >
           <div className="flex flex-col items-center ">
             <span className="font-semibold text-white text-lg uppercase mr-1">

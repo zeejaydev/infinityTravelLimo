@@ -99,7 +99,7 @@ const BookingModal: FC<BookingModalProps> = ({
   };
 
   const bookNow = async (token: string, last4: string | undefined) => {
-    console.log(payload);
+    // console.log(payload);
     fetch(
       "https://infinity-travel-limo.zeejaydevbackend.com/api/travel-limo/startBooking",
       {
@@ -147,7 +147,7 @@ const BookingModal: FC<BookingModalProps> = ({
         } else {
           setProcessing(false);
           setResults(null);
-          console.log(response);
+          // console.log(response);
         }
       })
       .catch((e) => {
@@ -192,26 +192,26 @@ const BookingModal: FC<BookingModalProps> = ({
     }
   };
 
-  const validateValue = (value: string | undefined): void => {
-    console.log(value);
-    const rawValue = value === undefined ? "undefined" : value;
-    setToggleTipButtonState(0);
-    if (value === "") {
-      return setTipAmount("0");
-    } else if (Number.isNaN(Number(value))) {
-      return setTipAmount("0");
-    } else {
-      setTipAmount(rawValue || "0");
-    }
-  };
+  // const validateValue = (value: string | undefined): void => {
+  //   console.log(value);
+  //   const rawValue = value === undefined ? "undefined" : value;
+  //   setToggleTipButtonState(0);
+  //   if (value === "") {
+  //     return setTipAmount("0");
+  //   } else if (Number.isNaN(Number(value))) {
+  //     return setTipAmount("0");
+  //   } else {
+  //     setTipAmount(rawValue || "0");
+  //   }
+  // };
 
   const handleTipButton = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (tipInput.current && tipInput.current.value != " ") {
-      console.log(tipInput.current?.value);
-      tipInput.current.value = "undefined";
-    }
+    // if (tipInput.current && tipInput.current.value != " ") {
+    //   console.log(tipInput.current?.value);
+    //   tipInput.current.value = "undefined";
+    // }
     if (!results) return;
     const percentage = event.currentTarget.textContent;
 
@@ -252,7 +252,6 @@ const BookingModal: FC<BookingModalProps> = ({
       default:
         break;
     }
-    console.log(percentage);
   };
   return (
     <div
@@ -308,7 +307,7 @@ const BookingModal: FC<BookingModalProps> = ({
         )}
 
         {results && (
-          <div className="flex w-full flex-col p-8 gap-8">
+          <div className="flex w-full flex-col p-8 gap-4">
             <div className="">
               <h1 className="text-xl font-semibold border-b-2">
                 Trip Information
@@ -523,7 +522,7 @@ const BookingModal: FC<BookingModalProps> = ({
                     25%
                   </button>
                 </div>
-                <CurrencyInput
+                {/* <CurrencyInput
                   placeholder="Other"
                   ref={tipInput}
                   allowDecimals={false}
@@ -532,7 +531,43 @@ const BookingModal: FC<BookingModalProps> = ({
                   prefix={"$"}
                   step={10}
                   min={0}
-                />
+                /> */}
+              </div>
+            </div>
+            <div>
+              <h1 className="text-xl font-semibold p-0 m-0">
+                Terms & Conditions
+              </h1>
+              <div className="max-h-[150px] overflow-y-scroll border-2 rounded-md">
+                <p className="p-2">
+                  Thank you for choosing Infinity Travel for your transportation
+                  needs.
+                  <br />
+                  Our rate includes all applicable taxes & fees. <br /> Infinity
+                  Travel, is not liable in the event of a mechanical breakdown
+                  during a transfer. The client assumes full financial liability
+                  for any damage to the vehicle caused during the duration of
+                  the transfer by them or any member of their party. The driver
+                  has the right to terminate a transfer without refund, if there
+                  is blatant indiscretion on the part of the client. Infinity
+                  Travel is not responsible for delays or cancellations caused
+                  by unsafe road conditions such as weather, accidents etc.
+                  Infinity Travel is not responsible for articles left in the
+                  vehicle. Vehicles cannot be loaded beyond their seating
+                  capacity. Hourly (as directed) transfers are billed in
+                  15-minute increments. Overtime charges will apply
+                  retroactively after the first 15 minutes of prearranged time
+                  described on the confirmation sheet. Infinity Travel has a
+                  strict 24-hour cancellation policy for individual reservations
+                  and a 48 hour cancellation policy during the Christmas holiday
+                  December 24th through January 2nd, Presidents Day Weekend, and
+                  during the Sundance Film Festival. Any reservation canceled
+                  within that window will be charged the full amount of the
+                  reservation. Our Hourly service includes only Salt Lake, Utah,
+                  Davis, Weber, Summit, and Wasatch Counties. Customers credit
+                  cards will be securly saved on file to be used when the
+                  booking is accepted by management.
+                </p>
               </div>
             </div>
             <div className="pb-20 md:pb-0">
@@ -553,8 +588,10 @@ const BookingModal: FC<BookingModalProps> = ({
                       : "rgb(252,165,165)",
                   }}
                 />
-                I authorize Infinity Travel Limo to save this card on file to be
-                charged when booking is accepted
+                <p className="leading-5">
+                  I accept the terms and authorize Infinity Travel to save this
+                  card on file to be charged when booking is accepted
+                </p>
               </label>
 
               <div className="flex flex-col md:flex-row">
@@ -630,7 +667,7 @@ const BookingModal: FC<BookingModalProps> = ({
                   applicationId={import.meta.env.VITE_SQUARE_APPLICATION_ID}
                   cardTokenizeResponseReceived={(token, buyer) => {
                     setProcessing(true);
-                    console.log(token, buyer);
+                    // console.log(token, buyer);
                     if (token.token) {
                       bookNow(token.token, token.details?.card?.last4);
                     }

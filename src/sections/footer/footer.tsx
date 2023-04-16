@@ -26,19 +26,22 @@ const Footer: FC = () => {
   };
   return (
     <div className="bg-[#161921]">
-      <div className="max-w-screen-xl flex flex-col md:flex-row md:m-auto flex-wrap p-5 justify-between">
-        <div className="flex flex-col h-full mb-10 md:mb-0 flex-1 px-5">
+      <div className="max-w-screen-xl flex flex-col gap-8 md:gap-0 md:flex-row md:m-auto flex-wrap p-5 justify-between">
+        <div className="flex flex-col h-full flex-1 px-5">
           <h1 className="text-base text-white font-semibold uppercase">
             operating hours
           </h1>
           <div className="flex flex-col text-[#ADADAD] font-semibold pt-1 pb-2 ">
-            <span>Sunday: 6am - 11pm</span>
-            <span>Monday: 6am - 11pm</span>
+            <span>
+              Monday-Sunday 6AM - 11pm <br />
+              After hours incurs surcharge
+            </span>
+            {/* <span>Monday: 6am - 11pm</span>
             <span>Tuesday: 6am - 11pm</span>
             <span>Wednesday: 6am - 11pm</span>
             <span>Thursday: 6am - 11pm</span>
             <span>Friday: 6am - 11pm</span>
-            <span>Saturday: 6am - 11pm</span>
+            <span>Saturday: 6am - 11pm</span> */}
           </div>
           <a
             href="#booking"
@@ -71,7 +74,9 @@ const Footer: FC = () => {
             Emergency Dispatch 24/7
           </h1>
           <p className="text-[#ADADAD] font-semibold pt-1 pb-2">
-            Need Help with a quick booking
+            Last minute and short notice booking
+            <br />
+            Please call (801) 555-5555
           </p>
         </div>
         <div className="flex flex-col flex-1 px-5">

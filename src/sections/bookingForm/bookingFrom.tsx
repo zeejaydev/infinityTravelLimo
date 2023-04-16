@@ -237,9 +237,12 @@ const BookingForm: FC = () => {
           <span> Booking must be 2 days in advance.</span>
         </span>
         <span className="text-sm mt-[-20px] md:ml-2">
-          <span className="text-[#f36e21]">*</span> If your start or end
-          destination isn't Salt Lake City Int Aiport please choose
-          Point-To-Point.
+          <span className="text-[#f36e21]">*</span> If you don't book from or to
+          the airport please choose Point-To-Point.
+        </span>
+        <span className="text-sm mt-[-20px] md:ml-2">
+          <span className="text-[#f36e21]">*</span> Hourly includes only Salt
+          Lake, Utah, Davis, Weber, Summit, and Wasatch Counties.
         </span>
         <div className="bg-[#f36e21] w-full p-3 flex gap-4 text-white justify-center items-center text-sm md:text-base">
           <h2 className="md:text-xl uppercase font-semibold">
@@ -423,7 +426,7 @@ const BookingForm: FC = () => {
                       {showReturnHours && (
                         <div
                           ref={returnHoursDropDwon}
-                          className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] overflow-y-auto drop-shadow-xl"
+                          className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] z-20 overflow-y-auto md:drop-shadow-xl"
                         >
                           <div className="flex flex-col text-justify">
                             {generateHoursInterval(60 * 0, 60 * 24, 15).map(
@@ -492,7 +495,6 @@ const BookingForm: FC = () => {
                     input.type == "select" &&
                     payload.bookingType != selectTypes.hourly
                   ) {
-                    console.log(payload.roundTrip);
                     return (
                       <select
                         key={index}
@@ -540,7 +542,7 @@ const BookingForm: FC = () => {
                         {showHours && (
                           <div
                             ref={hoursDropDwon}
-                            className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] overflow-y-auto drop-shadow-xl"
+                            className="inline-block border outline-char-black  w-full absolute top-[70px] left-0 bg-white max-h-[200px] z-20 overflow-y-auto md:drop-shadow-xl"
                           >
                             <div className="flex flex-col text-justify">
                               {generateHoursInterval(60 * 0, 60 * 24, 15).map(

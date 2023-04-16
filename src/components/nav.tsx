@@ -12,10 +12,10 @@ const Nav: FC = () => {
       className="flex flex-col bg-transparent absolute top-1 h-[125px] z-10"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-row justify-between">
-        <h1 className="text-white hidden md:flex md:text-base  capitalize md:pl-6">
+      <div className="flex flex-row justify-end">
+        {/* <h1 className="text-white hidden md:flex md:text-base  capitalize md:pl-6">
           Welcome to infinity travel limo
-        </h1>
+        </h1> */}
         <div className="flex w-full px-5 md:px-0  justify-between text-white md:w-1/2">
           <span className="flex items-center">
             <PhoneIcon className="h-4 w-4 text-white" />
@@ -39,12 +39,11 @@ const Nav: FC = () => {
       <div className="flex justify-between mt-0">
         <div
           className="relative flex justify-center w-[150px] h-[75px] md:w-[240px] lg:w-80 items-center text-white md:h-20 
-        backdrop-blur-lg bg-black/20 border-r-4 border-[#f36e21] 
         font-bold text-4xl"
         >
           <img
-            src="/assets/logo2.png"
-            className="h-[50%] object-contain md:h-[52px]"
+            src="/assets/logo3.png"
+            className="h-[100%] object-contain md:h-[100px]"
             alt=""
           />
         </div>
@@ -95,7 +94,7 @@ const Nav: FC = () => {
 
       {/* mobile drawer */}
       <div
-        className={`fixed z-30 flex flex-col items-center right-0 top-0 min-h-screen w-2/4 bg-white md:hidden ${
+        className={`fixed flex flex-col items-center right-0 top-0 min-h-screen w-2/4 bg-white md:hidden z-50 ${
           showDrawer
             ? "transition-all duration-500 ease-out"
             : "translate-x-full duration-500 ease-out"
@@ -132,6 +131,7 @@ const Nav: FC = () => {
           >
             Contact
           </a>
+          <div className="flex-1"></div>
         </div>
       </div>
     </div>

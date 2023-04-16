@@ -12,7 +12,7 @@ const ServiceCard: FC<serciveCardProps> = ({
   return (
     <>
       <div
-        className="relative md:w-card h-card bg-white p-10"
+        className="relative w-full md:w-card h-card bg-white p-10"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="py-5">
@@ -45,7 +45,7 @@ const ServiceCard: FC<serciveCardProps> = ({
           </button>
         </div>
         <div
-          className={`absolute w-card bg-white bottom-0 left-0 ${
+          className={`absolute bg-white bottom-0 left-0 w-full ${
             showDetails
               ? "h-card transition-all duration-500 ease-out"
               : "h-0 transition-all duration-500 ease-out"

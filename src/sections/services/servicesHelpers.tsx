@@ -4,26 +4,26 @@ import { MapIcon, MapPinIcon, BriefcaseIcon } from "@heroicons/react/24/solid";
 export const serviceCards: serciveCardProps[] = [
   {
     bgImage: "https://ik.imagekit.io/zeejaydev/card.png",
-    fullDes:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque doloribus veritatis qui, culpa eum doloremque illum sit eligendi ad consequuntur.",
+    fullDes: `You can trust Infinity Travel for your airport transportation to/from the airport 
+      to/from surrounding areas, ski resorts and summer destinations. Our drivers will provide meet 
+      and greet service from outside security, help you with your luggage and get you to your final destination in style.`,
     Icon: MapIcon,
-    smallDes: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non!",
+    smallDes:
+      "We will meet you past security, help you with your luggage and more...",
     title: "airport transfers",
   },
   {
     bgImage: "",
-    fullDes:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque doloribus veritatis qui, culpa eum doloremque illum sit eligendi ad consequuntur.",
+    fullDes: `Coming Soon ...`,
     Icon: MapPinIcon,
-    smallDes: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non!",
+    smallDes: "",
     title: "events & weddings",
   },
   {
     bgImage: "",
-    fullDes:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque doloribus veritatis qui, culpa eum doloremque illum sit eligendi ad consequuntur.",
+    fullDes: "Coming Soon ...",
     Icon: BriefcaseIcon,
-    smallDes: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non!",
+    smallDes: "",
     title: "business transfers",
   },
 ];

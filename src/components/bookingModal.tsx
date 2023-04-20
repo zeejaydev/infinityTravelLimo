@@ -101,7 +101,7 @@ const BookingModal: FC<BookingModalProps> = ({
   const bookNow = async (token: string, last4: string | undefined) => {
     // console.log(payload);
     fetch(
-      "https://infinity-travel-limo.zeejaydevbackend.com/api/travel-limo/startBooking",
+      "https://infinity-travel-limo.zeejaydevbackend.com/api/travel-limo/startBookingTest",
       {
         method: "POST",
         headers: {

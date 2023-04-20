@@ -21,19 +21,14 @@ const Reviews: FC = () => {
               <img alt="quotes-mark" src={Quotes} width={45} />
             </span>
           </div>
-          <div className="flex flex-col max-w-[748px] justify-center p-2">
+          <div className="flex flex-col flex-1 max-w-[748px] justify-center p-2">
             <p className="text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Architecto impedit dicta quas voluptatem nisi consectetur quis
-              dolores asperiores blanditiis iure commodi a nostrum veritatis
-              odit provident eaque, eligendi excepturi quos ratione? Mollitia
-              ipsum, corrupti exercitationem blanditiis delectus veritatis
-              facere soluta illo in iure dolor quod enim quaerat possimus optio.
-              Eos.
+              leave us your awesome review on instagram and we will feature it
+              here ASAP...
             </p>
             <div className="flex justify-between items-center mt-5">
               <h1 className="font-semibold text-2xl uppercase text-[#1b1b1b]">
-                david smith
+                john doe
               </h1>
               <div className="flex gap-3">
                 <StarIcon width={20} color="#f36e21" />

@@ -94,7 +94,7 @@ const CarCard: FC<CarCardProps> = ({
                 width={"100%"}
                 src={images[imageToShow]}
                 alt=""
-                style={{ objectFit: "contain" }}
+                style={{ objectFit: "cover" }}
               />
             </div>
             <div
